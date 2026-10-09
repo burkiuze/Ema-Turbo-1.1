@@ -1,0 +1,67 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ema-turbo"
+version = "1.1.0"
+description = "EMA Lightning's Turkish voice on ONNX Runtime: the same audio, no PyTorch, faster and lighter."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+requires-python = ">=3.11"
+authors = [
+    { name = "Burak İsa Şimşek (Vertex Corporation)" },
+    { name = "Canberk Aslan (EMA Lightning)" },
+]
+keywords = ["tts", "text-to-speech", "speech-synthesis", "turkish", "türkçe", "onnx", "onnxruntime"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Natural Language :: Turkish",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+]
+dependencies = [
+    "numpy>=1.24",
+    "onnxruntime>=1.17",
+    "normalizer-tr>=0.4,<0.5",
+]
+
+[project.optional-dependencies]
+export = ["torch>=2.1", "onnx>=1.15", "huggingface_hub>=0.20"]
+app = ["streamlit>=1.48"]
+test = ["pytest>=8"]
+dev = ["pytest>=8", "ruff>=0.6", "torch>=2.1", "onnx>=1.15"]
+
+[project.urls]
+"Based on" = "https://github.com/canberk7/ema-lightning"
+Weights = "https://huggingface.co/canberkkkkkk/ema-lightning"
+Normalizer = "https://github.com/erdemtuna/normalizer-tr"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ema_turbo"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src", "tests", "docs", "examples", "app.py", "requirements.txt", "README.md", "CHANGELOG.md",
+           "LICENSE", "NOTICE", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-exclude = ["src/ema_turbo/export_torch"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E731"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["ema_turbo"]

@@ -1,0 +1,24 @@
+EMA Turbo
+Copyright 2026 Burak İsa Şimşek (Vertex Corporation)
+
+This product is a modified version of EMA Lightning
+(https://github.com/canberk7/ema-lightning) by Canberk Aslan, licensed under
+the Apache License, Version 2.0. The ONNX models in models/ are exported from
+EMA Lightning's weights (https://huggingface.co/canberkkkkkk/ema-lightning,
+Apache-2.0); the weights' values are not changed.
+
+Changes made for EMA Turbo:
+  - The model runs on ONNX Runtime and NumPy instead of PyTorch: engine.py,
+    scheduler.py, audio.py and api.py are ports of EMA Lightning's files.
+  - New: rng.py (PyTorch's seeded CPU normal noise in NumPy), runtime.py
+    (model files and sessions), export.py (the PyTorch-to-ONNX exporter),
+    live.py (live replies from text that is still being written).
+  - export_torch/model.py: attention takes an additive mask built once per
+    call, and expm1 is written as exp - 1; both give the same values at every
+    real position. export_torch/decoder.py is unchanged.
+  - CPU windows are ten seconds; a stream's windows grow from 0.2 s, and its
+    first sentence is thought and decoded alone (scheduler.py).
+  - frontend.py and chunker.py are unchanged.
+
+Text normalization uses normalizer-tr by Erdem Tuna
+(https://github.com/erdemtuna/normalizer-tr), Apache-2.0.

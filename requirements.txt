@@ -1,0 +1,5 @@
+# Streamlit Cloud ya da herhangi bir CPU sunucusu için. PyTorch yok.
+numpy>=1.24
+onnxruntime>=1.17
+normalizer-tr>=0.4,<0.5
+streamlit>=1.48
